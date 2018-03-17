@@ -15,8 +15,6 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-server
     compile group: 'org.seleniumhq.selenium', name: 'selenium-server', version: '3.10.0'
-
-
 }
 
 task chromeTest(type: Test) {
@@ -35,6 +33,14 @@ task firefoxTest(type: Test) {
 
 task ieTest(type: Test) {
     systemProperty "driver", "ie"
+    useTestNG {
+        suites "testng.xml"
+    }
+}
+
+
+task remoteTest(type: Test) {
+    systemProperty "driver", "remote"
     useTestNG {
         suites "testng.xml"
     }

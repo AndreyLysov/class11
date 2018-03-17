@@ -1,6 +1,6 @@
 
 <suite name="Suite1" verbose="1" >
-    <test name="Nopackage" >
+    <test name="class11" >
         <classes>
             <class name="com.company.Tests.LoginTest" />
         </classes>

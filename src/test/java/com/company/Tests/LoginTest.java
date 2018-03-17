@@ -12,8 +12,8 @@ public class LoginTest extends BaseTest {
     }
 
     @Test
-    public void testSendingEmail() throws Exception {
-        app.login.loginValidUser();
+    public void testSendingEmail() {
+//        app.login.loginValidUser();
         app.start.createNewLetter();
         app.compose.composeAndSendValidLetter();
         app.start.logout();
