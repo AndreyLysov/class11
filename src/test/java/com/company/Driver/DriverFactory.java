@@ -9,6 +9,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 import static com.company.Common.Constants.BASE_URL;
 
@@ -16,7 +17,7 @@ public class DriverFactory {
     public static WebDriver driver;
     public static DesiredCapabilities caps;
 
-    public static WebDriver getDriver() throws MalformedURLException {
+    public static WebDriver getDriver() {
         String property = System.getProperty("driver");
         if ("firefox".equals(property)) {
             System.setProperty("webdriver.gecko.driver", "drivers/geckodriver.exe");
@@ -34,15 +35,19 @@ public class DriverFactory {
             caps.setCapability("browserstack.local", "true");
             caps.setCapability("browserstack.localIdentifier", "Test123");
 
-            driver = new RemoteWebDriver(
-                    new URL("https://andreylysov1:c4VJioUycqpABm9tFdZS@hub-cloud.browserstack.com/wd/hub"),
-                    DesiredCapabilities.chrome()
-            );
+            try {
+                driver = new RemoteWebDriver(
+                        new URL("https://andreylysov1:c4VJioUycqpABm9tFdZS@hub-cloud.browserstack.com/wd/hub"),
+                        DesiredCapabilities.chrome()
+                );
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
         } else {
-            System.setProperty("webdriver.ie.driver", "drivers/IEDriverServer2.exe");
+            System.setProperty("webdriver.ie.driver", "drivers/IEDriverServer.exe");
             driver = new InternetExplorerDriver();
         }
-
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.manage().window().maximize();
 
         driver.get(BASE_URL);

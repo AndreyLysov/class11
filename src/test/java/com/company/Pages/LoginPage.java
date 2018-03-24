@@ -2,6 +2,10 @@ package com.company.Pages;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.awt.*;
 
 public class LoginPage extends BasePage{
 
@@ -13,6 +17,10 @@ public class LoginPage extends BasePage{
 
 	@FindBy(xpath = "//p/input[@type='submit']")
 	private WebElement btnLogin;
+
+	@FindBy(name = "domn")
+	private WebElement domn;
+
 
 	public void enterLogin (String name) {
 	    inputLogin.sendKeys(name);
@@ -27,8 +35,23 @@ public class LoginPage extends BasePage{
     }
 
     public void login (String name, String password) {
-	    enterLogin(name);
-	    enterPassword(password);
-	    clickLogin();
+	    logger.info("set name " + name);
+        driver.jsSetValue(inputLogin, name);
+        logger.info("set password " + password);
+        driver.jsSetValue(inputPassword, password);
+//        Select domain = new Select(domn);
+
+        Robot robot = null;
+        try {
+            robot = new Robot();
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+
+        for (char c : "Ket".toCharArray()) {
+            robot.keyRelease(c);
+        }
+
+        clickLogin();
     }
 }

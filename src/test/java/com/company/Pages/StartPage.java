@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class StartPage extends BasePage {
 	@FindBy(xpath = "//li/span[@class='sn_menu_title']")
@@ -24,7 +25,9 @@ public class StartPage extends BasePage {
     }
 
 	public String getEmail() {
-	    return userEmail.getText();
+		new WebDriverWait(driver, 20).
+				until(ExpectedConditions.visibilityOf(userEmail));
+		return userEmail.getText();
     }
 
     public void createLetter() {
